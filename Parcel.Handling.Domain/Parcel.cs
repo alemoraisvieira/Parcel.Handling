@@ -7,13 +7,18 @@ namespace Parcel.Handling.Application.Dto
 {
     public class Package
     {
+
         [Required]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string NameSender { get; set; }
+        [Required]
+        public string NameReceipient { get; set; }
         [Required]
         public double Weight { get; set; }
-        public int IdDepartment { get; set; }
+        [Required]
+        public double Value { get; set; }
+        [Required]
         public string NameDepartment { get; set; }
     }
 }

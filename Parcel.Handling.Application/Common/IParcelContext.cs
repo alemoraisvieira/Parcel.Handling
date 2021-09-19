@@ -1,4 +1,5 @@
 ﻿using Parcel.Handling.Application.Dto;
+using Parcel.Handling.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,8 @@ namespace Parcel.Handling.Application.Common
 {
     public interface IParcelContext
     {
-        Task<IEnumerable<ParcelDto>> GetParcelList();
-        Task AddParcel(ParcelDto parcel);
+        List<Package> GetParcelList();
+        List<Package> GetParcelId(int id);
+        Task AddParcel(ParcelDto xmlData);
     }
 }

@@ -23,9 +23,13 @@ namespace Parcel.Handling.WebApi.Controller
 
 
         [HttpGet]
-        public IEnumerable<Department> GetDepartments()
+        public async Task<IActionResult> GetDepartments()
         {
-            return _context.Users;
+            var result = await _departmentService.GetDepartments();
+            if (result.Count == 0)
+                return NoContent();
+
+            return Ok(result);            
         }
 
         [HttpDelete]
@@ -44,50 +48,15 @@ namespace Parcel.Handling.WebApi.Controller
                 return BadRequest();
 
             await _departmentService.AddDepartment(department);
-            return Ok();
+            return Created("created", department);
         }
 
         [HttpPost]
         [Route("first-departments")]
-        public IActionResult AddDepartmentFirst()
+        public async Task<IActionResult> AddDepartmentFirst()
         {
-
-    
-                var department1 = new Department
-                {
-                    Id = 1,
-                    Name = "Mail"
-                };
-
-                _context.Users.Add(department1);
-
-                var department2 = new Department
-                {
-                    Id = 2,
-                    Name = "Regular"
-                };
-
-                _context.Users.Add(department2);
-
-                var department3 = new Department
-                {
-                    Id = 3,
-                    Name = "Heavy"
-                };
-
-                _context.Users.Add(department3);
-
-                var department4 = new Department
-                {
-                    Id = 4,
-                    Name = "Insurance"
-                };
-
-                _context.Users.Add(department4);
-                _context.SaveChanges();
-
-            return Ok();
-
+            await _departmentService.AddFistDepartment();
+            return Created("created", "");
         }
     }
 }

@@ -14,7 +14,11 @@ namespace Parcel.Handling.Application.Services
         public DepartmentService(IContext context) =>
                     (_context) = (context);
 
-        
+        public async Task<List<Department>> GetDepartments()
+        {
+            var result = _context.GetDepartmentList();
+            return result;
+        }
         public async Task DeleteDepartment(int idDepartment)
         {
             await _context.DeleteDepartmentById(idDepartment);
@@ -22,8 +26,14 @@ namespace Parcel.Handling.Application.Services
         }
         public async Task AddDepartment(DepartmentDto department)
         {
-            await _context.SetNewDepartment(department);
+            await _context.AddNewDepartment(department);
 
         }
+        public async Task AddFistDepartment()
+        {
+            await _context.AddNewFistDepartment();
+
+        }
+
     }
 }

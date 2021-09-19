@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parcel.Handling.Application.common;
-using Parcel.Handling.Application.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Parcel.Handling.WebApi.Controller
 {
@@ -24,21 +19,30 @@ namespace Parcel.Handling.WebApi.Controller
         [HttpGet]
         public async Task<IActionResult> GetParcel()
         {
-            var parcelList = await _parcelService.GetParcels();
-            return Ok(parcelList);
+            var result = await _parcelService.GetParcels();
+            if (result.Count == 0)
+                return NoContent();
+            
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetParcelById([FromRoute] int id)
+        {
+            var result = await _parcelService.GetParcelById(id);
+            if (result.Count == 0)
+                return NoContent();
+
+            return Ok(result);
         }
 
         [HttpPost]
         [Route("new-parcel")]
         public async Task<IActionResult> Addparcel()
         {
-            //XDocument document = XDocument.Load("C:\\ParcelDelivery\\Data\\Container_68465468.xml");
-
-            //if (document == null)
-            //    return NoContent();
-
             await _parcelService.AddParcel();
-            return Ok();
+            return Created("created new parcel","") ;
         }
     }
 }

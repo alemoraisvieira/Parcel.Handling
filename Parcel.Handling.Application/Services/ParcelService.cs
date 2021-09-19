@@ -1,6 +1,8 @@
-﻿using Parcel.Handling.Application.common;
+﻿using Microsoft.Extensions.Options;
+using Parcel.Handling.Application.common;
 using Parcel.Handling.Application.Common;
 using Parcel.Handling.Application.Dto;
+using Parcel.Handling.Domain;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,26 +17,38 @@ namespace Parcel.Handling.Application.Services
     public class ParcelService : IParcelService
     {
         private readonly IParcelContext _parcelcontext;
-        public ParcelService(IParcelContext parcelcontext) =>
-                    (_parcelcontext) = (parcelcontext);
-
-        public async Task<IEnumerable<ParcelDto>> GetParcels()
+        private readonly PathOption _options;
+        public ParcelService(IParcelContext parcelcontext, IOptions<PathOption> pathOptions)
         {
-            var result = await _parcelcontext.GetParcelList();
-
-            return result;
-
+            _parcelcontext = parcelcontext;
+            _options = pathOptions.Value;
         }
-        public async Task AddParcel()
+
+        public async Task<List<Package>> GetParcels()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(ParcelDto),new XmlRootAttribute("Container"));
-            TextReader reader = new StreamReader(@"C:\ParcelDelivery\Data\Container_68465468.xml");
-            //XDocument document = XDocument.Load("C:\\ParcelDelivery\\Data\\Container_68465468.xml");
+            var result =  _parcelcontext.GetParcelList();
+            return result;
+        }
+        public async Task<List<Package>> GetParcelById(int id)
+        {
+            var result = _parcelcontext.GetParcelId(id);
+            return result;
+        }
+        public Task AddParcel()
+        {
+            var xmlDeserialize = DeserializerXML();
+            if (xmlDeserialize != null)
+                _parcelcontext.AddParcel(xmlDeserialize);
+            return Task.CompletedTask;
+        }
+
+        private ParcelDto DeserializerXML()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ParcelDto), new XmlRootAttribute("Container"));
+            TextReader reader = new StreamReader(@_options.PathXml);
             object obj = serializer.Deserialize(reader);
-            ParcelDto XmlData = (ParcelDto)obj;
-
-            await _parcelcontext.AddParcel(XmlData);
-
+            var XmlData = (ParcelDto)obj;
+            return XmlData;
         }
     }
 }

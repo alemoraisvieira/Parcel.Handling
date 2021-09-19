@@ -9,6 +9,8 @@ namespace Parcel.Handling.Application.common
     public interface IDepartmentService
     {
         Task DeleteDepartment(int id);
+        Task<List<Department>> GetDepartments();
         Task AddDepartment(DepartmentDto department);
+        Task AddFistDepartment();
     }
 }
