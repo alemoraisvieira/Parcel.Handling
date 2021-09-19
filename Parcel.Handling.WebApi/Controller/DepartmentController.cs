@@ -41,10 +41,9 @@ namespace Parcel.Handling.WebApi.Controller
         }
 
         [HttpPost]
-        [Route("new-department")]
         public async Task<IActionResult> AddDepartment([FromBody] DepartmentDto department)
         {
-            if (department == null)
+            if (!department.Name.Any() || department == null)
                 return BadRequest();
 
             await _departmentService.AddDepartment(department);
