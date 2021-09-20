@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Parcel.Handling.Infra
 {
-    public class ParcelContext : IParcelContext
+    public class ParcelRepository : IParcelContext
     {
         private ApiContext _context;
 
-        public ParcelContext(ApiContext context) =>
+        public ParcelRepository(ApiContext context) =>
             (_context) = (context);
         public List<Package> GetParcelList()
         {

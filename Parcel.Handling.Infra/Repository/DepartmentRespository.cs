@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Parcel.Handling.Infra
 {
-    public class Context : IContext
+    public class DepartmentRespository : IContext
     {
         private ApiContext _context;
 
-        public Context(ApiContext context) =>
+        public DepartmentRespository(ApiContext context) =>
             (_context) = ( context);
 
         public List<Department> GetDepartmentList()

@@ -18,8 +18,8 @@ namespace Parcel.Handling.WebApi.Controller
         private ApiContext _context;
 
 
-        public DepartmentController(IDepartmentService departmentService, ApiContext context) =>
-            (_departmentService, _context) = (departmentService, context);
+        public DepartmentController(IDepartmentService departmentService) =>
+            (_departmentService) = (departmentService);
 
 
         [HttpGet]

@@ -10,8 +10,8 @@ namespace Parcel.Handling.Infra.IoC
     {
         public static IServiceCollection AddRepository(this IServiceCollection services)
         {
-            services.AddScoped<IContext, Context>();
-            services.AddScoped<IParcelContext, ParcelContext>();
+            services.AddScoped<IContext, DepartmentRespository>();
+            services.AddScoped<IParcelContext, ParcelRepository>();
             return services;
 
         }

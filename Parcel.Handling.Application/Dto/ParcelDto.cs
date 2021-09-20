@@ -13,8 +13,14 @@ namespace Parcel.Handling.Application.Dto
         public string ShippingDate { get; set; }
         
         [XmlArray("parcels")]
-        public List<ParcelsDto> Parcels { get; set; }
+        public List<Parcel> Parcels { get; set; }
     }
 
-   
+    public class Parcel
+    {
+        public SenderDto Sender { get; set; }
+        public ReceipientDto Receipient { get; set; }
+        public double Weight { get; set; }
+        public double Value { get; set; }
+    }
 }

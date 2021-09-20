@@ -26,13 +26,11 @@ namespace Parcel.Handling.Application.Services
 
         public async Task<List<Package>> GetParcels()
         {
-            var result =  _parcelcontext.GetParcelList();
-            return result;
+            return await Task.Run(() => _parcelcontext.GetParcelList());
         }
         public async Task<List<Package>> GetParcelById(int id)
         {
-            var result = _parcelcontext.GetParcelId(id);
-            return result;
+            return await Task.Run(() => _parcelcontext.GetParcelId(id));
         }
         public Task AddParcel()
         {
