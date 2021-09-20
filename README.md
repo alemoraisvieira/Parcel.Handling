@@ -28,22 +28,23 @@ The Infra layer will be responsible for the repositories and database in memory 
 We have some endpoints in our solution. Below is a brief explanation of each:
 
 - Department
-Fist Execution:
-	.Post api/v1/department/first-departments
-		Must run before all other endpoints.Is fundamental to the execution of our application, because it performs the initial loading of departments in the database in memory for our application.("Mail","Regular","Heavy","Insurance")
+* **Fist Execution**
+	<br>.Post api/v1/department/first-departments:
+	<br>Must run before all other endpoints.Is fundamental to the execution of our application, because it performs the initial loading of departments in the database in memory for our application.("Mail","Regular","Heavy","Insurance")
+		
 
-Executions without order 
-	.Get api/v1/department
-		this endpoint accesses our database in memory to search all departments in the base, always sorting by ID
-	.Post api/v1/department
-		this endpoint inserts into our database a new department, great for companies that are expanding and creating new departments.
-	.Delete api/v1/department
-		this endpoint delete into our database a department through id, so be careful when using!
+* **Executions without order **
+	<br>.Get api/v1/department:
+		<br>this endpoint accesses our database in memory to search all departments in the base, always sorting by ID
+	<br>.Post api/v1/department:
+		<br>this endpoint inserts into our database a new department, great for companies that are expanding and creating new departments.
+	<br>.Delete api/v1/department:
+		<br>this endpoint delete into our database a department through id, so be careful when using!
 
-- Parcel
-	.Post api/v1/parcel/new-parcel
-		this is the endpoint responsible for reading the XML file with all received packets and distributing them among departments according to established business rule. 
-	.Post api/v1/parcel
-		this is the endpoint responsible for accesses our database to search all parcels with their respective departments, always sorting by ID
-	.Post api/v1/parcel/{id}
-		this is the endpoint responsible for accesses our database to search the especific parcel with their respective department.
+* **Parcel**
+	<br>.Post api/v1/parcel/new-parcel:
+		<br>this is the endpoint responsible for reading the XML file with all received packets and distributing them among departments according to established business rule. 
+	<br>.Post api/v1/parcel:
+		<br>this is the endpoint responsible for accesses our database to search all parcels with their respective departments, always sorting by ID
+	<br>.Post api/v1/parcel/{id}:
+		<br>this is the endpoint responsible for accesses our database to search the especific parcel with their respective department.
