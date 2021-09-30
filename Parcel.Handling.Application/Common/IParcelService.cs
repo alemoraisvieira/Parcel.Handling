@@ -10,8 +10,8 @@ namespace Parcel.Handling.Application.common
 {
     public interface IParcelService
     {
-        Task<List<Package>> GetParcels();
-        Task<List<Package>> GetParcelById(int id);
+        Task<IEnumerable<Package>> GetParcels();
+        Task <Package> GetParcelById(int id);
         Task AddParcel();
     }
 }

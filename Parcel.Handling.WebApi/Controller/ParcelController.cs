@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Parcel.Handling.Application.common;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Parcel.Handling.WebApi.Controller
@@ -20,7 +21,7 @@ namespace Parcel.Handling.WebApi.Controller
         public async Task<IActionResult> GetParcel()
         {
             var result = await _parcelService.GetParcels();
-            if (result.Count == 0)
+            if (!result.Any())
                 return NoContent();
             
             return Ok(result);
@@ -31,7 +32,7 @@ namespace Parcel.Handling.WebApi.Controller
         public async Task<IActionResult> GetParcelById([FromRoute] int id)
         {
             var result = await _parcelService.GetParcelById(id);
-            if (result.Count == 0)
+            if (result is null)
                 return NoContent();
 
             return Ok(result);

@@ -27,7 +27,7 @@ namespace Parcel.Handling.WebApi
         {
             services.AddSettings(_configuration);
 
-            services.AddDbContext<ApiContext>(options => options.UseInMemoryDatabase("Department"))
+            services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("Department"))
                 .AddMemoryCache()
                 .AddAplication()
                 .AddRepository()

@@ -16,28 +16,29 @@ namespace Parcel.Handling.Application.Services
 {
     public class ParcelService : IParcelService
     {
-        private readonly IParcelContext _parcelcontext;
+        private readonly IParcelRepository _parcelRepository;
         private readonly PathOption _options;
-        public ParcelService(IParcelContext parcelcontext, IOptions<PathOption> pathOptions)
+        public ParcelService(IParcelRepository parcelcontext, IOptions<PathOption> pathOptions)
         {
-            _parcelcontext = parcelcontext;
+            _parcelRepository = parcelcontext;
             _options = pathOptions.Value;
         }
 
-        public async Task<List<Package>> GetParcels()
+        public async Task<IEnumerable<Package>> GetParcels()
         {
-            return await Task.Run(() => _parcelcontext.GetParcelList());
+            var result = await _parcelRepository.GetParcelList();
+            return result;
         }
-        public async Task<List<Package>> GetParcelById(int id)
+        public async Task <Package> GetParcelById(int id)
         {
-            return await Task.Run(() => _parcelcontext.GetParcelId(id));
+            var result = await _parcelRepository.GetParcelId(id);
+            return result;
         }
-        public Task AddParcel()
+        public async Task AddParcel()
         {
             var xmlDeserialize = DeserializerXML();
             if (xmlDeserialize != null)
-                _parcelcontext.AddParcel(xmlDeserialize);
-            return Task.CompletedTask;
+                await _parcelRepository.AddParcel(xmlDeserialize);
         }
 
         private ParcelDto DeserializerXML()

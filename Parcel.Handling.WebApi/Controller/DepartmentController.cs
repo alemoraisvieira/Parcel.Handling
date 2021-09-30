@@ -15,7 +15,7 @@ namespace Parcel.Handling.WebApi.Controller
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        private ApiContext _context;
+        private ApplicationDbContext _context;
 
 
         public DepartmentController(IDepartmentService departmentService) =>
@@ -26,7 +26,7 @@ namespace Parcel.Handling.WebApi.Controller
         public async Task<IActionResult> GetDepartments()
         {
             var result = await _departmentService.GetDepartments();
-            if (result.Count == 0)
+            if (!result.Any())
                 return NoContent();
 
             return Ok(result);            
@@ -43,19 +43,11 @@ namespace Parcel.Handling.WebApi.Controller
         [HttpPost]
         public async Task<IActionResult> AddDepartment([FromBody] DepartmentDto department)
         {
-            if (!department.Name.Any() || department == null)
-                return BadRequest();
+            if (!department.Name.Any() || department is null)
+                return BadRequest("Wrong parameters");
 
             await _departmentService.AddDepartment(department);
             return Created("created", department);
-        }
-
-        [HttpPost]
-        [Route("first-departments")]
-        public async Task<IActionResult> AddDepartmentFirst()
-        {
-            await _departmentService.AddFistDepartment();
-            return Created("created", "");
         }
     }
 }

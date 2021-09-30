@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Parcel.Handling.Application.Common
 {
-    public interface IContext
+    public interface IDepartmentRepository
     {
         Task DeleteDepartmentById(int idDepartment);
-        List<Department> GetDepartmentList();
+        Task <List<Department>> GetDepartmentList();
         Task AddNewDepartment(DepartmentDto department);
-        Task AddNewFistDepartment();
     }
 }

@@ -10,13 +10,13 @@ namespace Parcel.Handling.Application.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IContext _context;
-        public DepartmentService(IContext context) =>
+        private readonly IDepartmentRepository _context;
+        public DepartmentService(IDepartmentRepository context) =>
                     (_context) = (context);
 
         public async Task<List<Department>> GetDepartments()
         {
-            var result = _context.GetDepartmentList();
+            var result = await _context.GetDepartmentList();
             return result;
         }
         public async Task DeleteDepartment(int idDepartment)
@@ -27,11 +27,6 @@ namespace Parcel.Handling.Application.Services
         public async Task AddDepartment(DepartmentDto department)
         {
             await _context.AddNewDepartment(department);
-
-        }
-        public async Task AddFistDepartment()
-        {
-            await _context.AddNewFistDepartment();
 
         }
 

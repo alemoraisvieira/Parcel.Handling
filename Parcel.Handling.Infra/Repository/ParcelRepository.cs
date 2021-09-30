@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace Parcel.Handling.Infra
 {
-    public class ParcelRepository : IParcelContext
+    public class ParcelRepository : IParcelRepository
     {
-        private ApiContext _context;
+        private ApplicationDbContext _context;
 
-        public ParcelRepository(ApiContext context) =>
+        public ParcelRepository(ApplicationDbContext context) =>
             (_context) = (context);
-        public List<Package> GetParcelList()
+        public async Task<List<Package>> GetParcelList()
         {
-            var result = _context.Package.OrderBy(x => x.Id).ToList();
+            var result =  _context.Packages.OrderBy(x => x.Id).ToList();
             return result;
         }
 
-        public List<Package> GetParcelId(int id)
+        public async Task <Package> GetParcelId(int id)
         {
-            var result = _context.Package.Where(x=> x.Id == id);
-            return result.ToList();
+            var result = _context.Packages.FirstOrDefault(x=> x.Id == id);
+            return result;
         }
         public Task AddParcel(ParcelDto xmlData)
         {
@@ -56,7 +56,7 @@ namespace Parcel.Handling.Infra
                     Value = file.Value,
                     NameDepartment = departmentName,
                 };
-                _context.Package.Add(addParcel);
+                _context.Packages.Add(addParcel);
             }
 
             _context.SaveChanges();

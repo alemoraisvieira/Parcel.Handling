@@ -11,6 +11,5 @@ namespace Parcel.Handling.Application.common
         Task DeleteDepartment(int id);
         Task<List<Department>> GetDepartments();
         Task AddDepartment(DepartmentDto department);
-        Task AddFistDepartment();
     }
 }

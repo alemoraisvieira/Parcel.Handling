@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Parcel.Handling.Application.Common
 {
-    public interface IParcelContext
+    public interface IParcelRepository
     {
-        List<Package> GetParcelList();
-        List<Package> GetParcelId(int id);
+        Task <List<Package>> GetParcelList();
+        Task <Package> GetParcelId(int id);
         Task AddParcel(ParcelDto xmlData);
     }
 }
