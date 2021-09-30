@@ -16,15 +16,15 @@ namespace Parcel.Handling.Infra
         public async Task<List<Package>> GetParcelList()
         {
             var result =  _context.Packages.OrderBy(x => x.Id).ToList();
-            return result;
+            return await Task.FromResult(result);
         }
 
         public async Task <Package> GetParcelId(int id)
         {
             var result = _context.Packages.FirstOrDefault(x=> x.Id == id);
-            return result;
+            return await Task.FromResult(result);
         }
-        public Task AddParcel(ParcelDto xmlData)
+        public async Task AddParcel(ParcelDto xmlData)
         {
 
             string departmentName = "";
@@ -47,7 +47,6 @@ namespace Parcel.Handling.Infra
                     departmentName = "Insurance";
                 }
                 
-                
                 var addParcel = new Package
                 {
                     NameSender = file.Sender.Name,
@@ -60,7 +59,7 @@ namespace Parcel.Handling.Infra
             }
 
             _context.SaveChanges();
-            return Task.CompletedTask;  
+            await Task.CompletedTask;  
         } 
     }
 }

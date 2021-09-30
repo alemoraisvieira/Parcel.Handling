@@ -16,25 +16,21 @@ namespace Parcel.Handling.Infra
         public DepartmentRespository(ApplicationDbContext context) =>
             (_context) = ( context);
 
-        public Task <List<Department>> GetDepartmentList()
+        public async Task <List<Department>> GetDepartmentList()
         {
-            return Task.Run(() =>
-            {
-                var result = _context.Departments.OrderBy( x=> x.Id).ToList();
-                return result;
-            });
+            var result = _context.Departments.OrderBy( x=> x.Id).ToList();
+            return await Task.FromResult(result);
         }
-        public Task DeleteDepartmentById(int id)
+        public async Task DeleteDepartmentById(int id)
         {
             var department = _context.Departments.FirstOrDefault(i => i.Id == id);
             if (department != null)
                 _context.Departments.Remove(department);
                 _context.SaveChanges();
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
-        public Task AddNewDepartment(DepartmentDto department)
+        public async Task AddNewDepartment(DepartmentDto department)
         {
-            
             var addDepartment = new Department
             {
                 Name = department.Name
@@ -42,7 +38,7 @@ namespace Parcel.Handling.Infra
 
             _context.Departments.Add(addDepartment);
             _context.SaveChanges();
-            return Task.CompletedTask;
+            await  Task.CompletedTask;
         }
     }
 }

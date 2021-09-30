@@ -15,8 +15,6 @@ namespace Parcel.Handling.WebApi.Controller
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        private ApplicationDbContext _context;
-
 
         public DepartmentController(IDepartmentService departmentService) =>
             (_departmentService) = (departmentService);
